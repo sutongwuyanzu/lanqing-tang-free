@@ -93,7 +93,7 @@ export default function Home() {
       </section>
 
       {/* 功能入口 */}
-      <section className="mx-auto max-w-4xl px-4 pb-12 md:px-6">
+      <section className="mx-auto max-w-6xl px-4 pb-12 md:px-6">
         <div className="divider-ornament mb-8 text-sm">
           ✦ 四大善门 ✦
         </div>

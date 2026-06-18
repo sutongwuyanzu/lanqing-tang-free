@@ -1,27 +1,27 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* 深色古典主题色板 */
-  --color-bg-primary: #1a1410;
-  --color-bg-card: #2a2018;
-  --color-bg-card-hover: #352a1e;
-  --color-bg-input: #231c14;
-  --color-bg-elevated: #342a1f;
+  /* 竹纸卷主题色板 —— 浅竹米白底 + 竹绿主色 + 墨绿文字 */
+  --color-bg-primary: #F5F1E8;    /* 竹纸米白，主背景 */
+  --color-bg-card: #FFFFFF;       /* 卡片纯白，在米白底上浮起 */
+  --color-bg-card-hover: #FAF6EC; /* 卡片悬停，更暖的米白 */
+  --color-bg-input: #FAF6EC;      /* 输入框，淡米 */
+  --color-bg-elevated: #EDE6D6;   /* 凸起元素 */
 
-  --color-gold: #D4AF77;
-  --color-gold-dark: #B8965A;
-  --color-gold-light: #E8D5A8;
-  --color-gold-dim: #A89060;
+  --color-gold: #5C7A4A;          /* 主色：竹绿（按钮/标题/强调） */
+  --color-gold-dark: #3F5A30;     /* 深竹绿，按钮渐变深色端 */
+  --color-gold-light: #7FA068;    /* 浅竹绿，高亮 */
+  --color-gold-dim: #8AA078;      /* 暗竹绿，次要强调 */
 
-  --color-text-primary: #E8DCC8;
-  --color-text-secondary: #A89070;
-  --color-text-muted: #705840;
+  --color-text-primary: #2D3E2A;  /* 墨绿黑，正文（深色保证阅读对比度） */
+  --color-text-secondary: #5A6B4A;/* 中竹绿，次要文字 */
+  --color-text-muted: #8A9A7A;    /* 灰竹绿，提示文字 */
 
-  --color-border: #3a2e20;
-  --color-border-light: #4a3e2e;
+  --color-border: #D8D0BC;        /* 米灰边框 */
+  --color-border-light: #C5BC9E;  /* 深一些的米灰 */
 
   --color-red-accent: #C45C5C;
-  --color-green-accent: #6B8E5A;
+  --color-green-accent: #5C7A4A;
 
   --font-serif: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
   --font-sans: system-ui, -apple-system, sans-serif;
@@ -69,8 +69,8 @@ body {
 }
 
 @keyframes flame-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(212, 175, 119, 0.3), 0 0 40px rgba(212, 175, 119, 0.1); }
-  50% { box-shadow: 0 0 30px rgba(212, 175, 119, 0.5), 0 0 60px rgba(212, 175, 119, 0.2); }
+  0%, 100% { box-shadow: 0 0 20px rgba(92, 122, 74, 0.3), 0 0 40px rgba(92, 122, 74, 0.1); }
+  50% { box-shadow: 0 0 30px rgba(92, 122, 74, 0.5), 0 0 60px rgba(92, 122, 74, 0.2); }
 }
 
 @keyframes float-up {
@@ -102,8 +102,8 @@ body {
 }
 
 @keyframes pulse-gold {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 119, 0.4); }
-  50% { box-shadow: 0 0 0 12px rgba(212, 175, 119, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(92, 122, 74, 0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(92, 122, 74, 0); }
 }
 
 @keyframes gentle-sway {
@@ -177,7 +177,7 @@ body {
 /* 按钮样式 */
 .btn-primary {
   background: linear-gradient(135deg, var(--color-gold-dark), var(--color-gold));
-  color: var(--color-bg-primary);
+  color: #FFFFFF;  /* 浅色背景下按钮文字用白色，保证对比度 */
   font-weight: 600;
   border-radius: 0.75rem;
   padding: 0.875rem 2rem;
@@ -186,7 +186,7 @@ body {
 
 .btn-primary:hover {
   background: linear-gradient(135deg, var(--color-gold), var(--color-gold-light));
-  box-shadow: 0 4px 16px rgba(212, 175, 119, 0.3);
+  box-shadow: 0 4px 16px rgba(92, 122, 74, 0.3);
 }
 
 .btn-primary:disabled {
@@ -204,7 +204,7 @@ body {
 }
 
 .btn-secondary:hover {
-  background: rgba(212, 175, 119, 0.1);
+  background: rgba(92, 122, 74, 0.1);
   border-color: var(--color-gold);
 }
 
@@ -222,16 +222,16 @@ body {
 .input-classic:focus {
   outline: none;
   border-color: var(--color-gold);
-  box-shadow: 0 0 0 3px rgba(212, 175, 119, 0.1);
+  box-shadow: 0 0 0 3px rgba(92, 122, 74, 0.15);
 }
 
 .input-classic::placeholder {
   color: var(--color-text-muted);
 }
 
-/* 页面容器 */
+/* 页面容器 —— 加宽版，配合双栏布局充分利用桌面宽度 */
 .page-container {
-  max-width: 42rem;
+  max-width: 64rem;  /* 1024px，从原 42rem 加宽 */
   margin: 0 auto;
   padding: 1.5rem;
 }
@@ -239,5 +239,29 @@ body {
 @media (min-width: 768px) {
   .page-container {
     padding: 2rem;
+  }
+}
+
+/* 双栏布局：桌面左主内容(2份) + 右侧边栏(1份)，手机单栏堆叠 */
+.page-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .page-grid {
+    grid-template-columns: 2fr 1fr;
+    align-items: start;
+  }
+}
+
+/* 侧边栏在桌面端 sticky 跟随滚动 */
+@media (min-width: 1024px) {
+  .page-sidebar {
+    position: sticky;
+    top: 5.5rem;
+    max-height: calc(100vh - 6rem);
+    overflow-y: auto;
   }
 }

@@ -124,7 +124,9 @@ export default function BaziPage() {
       </div>
 
       {baziResult && (
-        <div className="animate-fade-in-up space-y-4">
+        <div className="page-grid mt-6">
+          {/* 左栏：八字排盘 + 起名建议 */}
+          <div className="animate-fade-in-up space-y-4">
           <div className="card-classic p-5">
             <h2 className="mb-4 text-center text-sm font-bold text-gold">✦ 四柱八字 ✦</h2>
             <div className="grid grid-cols-4 gap-3">
@@ -161,26 +163,31 @@ export default function BaziPage() {
           </div>
 
           {nameSuggestions.length > 0 && (
-            <>
               <div className="card-classic p-5">
                 <h2 className="mb-4 text-sm font-bold text-gold">✦ 起名建议（共 {nameSuggestions.length} 个）✦</h2>
                 <div className="space-y-3">
                   {nameSuggestions.map((s, i) => (<NameCard key={i} suggestion={s} surname={surname} index={i} />))}
                 </div>
               </div>
-              <div className="mt-6">
-                <DonateSection variant="compact" text="好名已成，随喜打赏，福泽宝宝 🙏" />
+          )}
+          </div>
+
+          {/* 右栏：侧边栏（打赏 + 提示） */}
+          {nameSuggestions.length > 0 && (
+            <aside className="page-sidebar space-y-4">
+              <DonateSection variant="compact" text="好名已成，随喜打赏，福泽宝宝 🙏" />
+              <div className="card-classic p-4">
+                <p className="text-xs leading-relaxed text-text-muted">
+                  💡 起名综合考虑五行补益、音韵笔画、典故寓意。仅供参考娱乐，正式起名建议咨询专业命理师。
+                </p>
               </div>
-            </>
+            </aside>
           )}
         </div>
       )}
 
       <div className="mt-4 flex justify-center">
         <ShareButton />
-      </div>
-      <div className="mt-6 text-center">
-        <p className="text-xs text-text-muted">仅供参考娱乐 · 正式起名建议咨询专业命理师</p>
       </div>
     </div>
   );

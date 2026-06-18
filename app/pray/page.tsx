@@ -128,6 +128,10 @@ export default function PrayPage() {
         <p className="text-sm text-text-secondary">点一盏灯，挂家人姓名，愿心愿成就</p>
       </div>
 
+      <div className="page-grid">
+        {/* ===== 左栏：点灯表单 / 成功页 ===== */}
+        <div className="space-y-6">
+
       {/* ===== 点灯表单 ===== */}
       {step === "form" && (
         <div className="space-y-6">
@@ -237,30 +241,35 @@ export default function PrayPage() {
         </div>
       )}
 
-      {/* ===== 祈愿墙（底部展示） ===== */}
-      <div className="card-classic mt-8 p-5">
-        <h2 className="mb-4 flex items-center gap-2 text-sm font-bold text-gold">
-          <Flame className="h-4 w-4" /> 祈愿墙（共 {wallWishes.length} 盏灯）
-        </h2>
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-          {wallWishes.slice(0, 16).map((item) => {
-            const color = lampColorMap[item.lamp] || "#D4AF77";
-            return (
-              <div key={item.id} className="rounded-xl border border-border bg-bg-input p-3 text-center">
-                <div className="mb-2 flex justify-center">
-                  <div className="relative">
-                    <div className="h-8 w-8 rounded-full opacity-30 blur-md" style={{ backgroundColor: color }} />
-                    <Flame className="absolute inset-0 m-auto h-5 w-5 animate-flicker" style={{ color }} />
-                  </div>
-                </div>
-                <div className="text-sm font-medium text-text-primary">{item.maskedName}</div>
-                <div className="text-[10px] text-gold">{item.lamp}</div>
-                <div className="mt-1 truncate text-[10px] text-text-muted" title={item.wish}>{item.wish}</div>
-                <div className="text-[9px] text-text-muted/60">{item.time}</div>
-              </div>
-            );
-          })}
         </div>
+
+        {/* ===== 右栏：祈愿墙侧边栏 ===== */}
+        <aside className="page-sidebar">
+          <div className="card-classic p-5">
+            <h2 className="mb-4 flex items-center gap-2 text-sm font-bold text-gold">
+              <Flame className="h-4 w-4" /> 祈愿墙（共 {wallWishes.length} 盏灯）
+            </h2>
+            <div className="grid grid-cols-2 gap-3">
+              {wallWishes.slice(0, 12).map((item) => {
+                const color = lampColorMap[item.lamp] || "#5C7A4A";
+                return (
+                  <div key={item.id} className="rounded-xl border border-border bg-bg-input p-3 text-center">
+                    <div className="mb-2 flex justify-center">
+                      <div className="relative">
+                        <div className="h-8 w-8 rounded-full opacity-30 blur-md" style={{ backgroundColor: color }} />
+                        <Flame className="absolute inset-0 m-auto h-5 w-5 animate-flicker" style={{ color }} />
+                      </div>
+                    </div>
+                    <div className="text-sm font-medium text-text-primary">{item.maskedName}</div>
+                    <div className="text-[10px] text-gold">{item.lamp}</div>
+                    <div className="mt-1 truncate text-[10px] text-text-muted" title={item.wish}>{item.wish}</div>
+                    <div className="text-[9px] text-text-muted/60">{item.time}</div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
   );
