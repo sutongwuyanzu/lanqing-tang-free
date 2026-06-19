@@ -1,56 +1,61 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { Music, Volume2, VolumeX, Pause, Play } from "lucide-react";
 
 // 禅修氛围音乐播放器
-// - 音频源：public/music/zen-ambient.mp3（CC0 免版权流水禅音，内置随项目部署，永不失效）
-// - 浏览器自动播放策略：页面加载时不能直接播放（会被拦截），
-//   监听用户首次任意交互（点击/触摸）后自动开始播放。
-// - 用户可手动播放/暂停/静音。
+// - 音频源：public/music/zen-ambient.mp3（古筝禅音，内置随项目部署）
+// - 浏览器自动播放策略：带声音的自动播放一律被拦截。
+//   解法：页面加载即以「静音」状态开始播放（所有浏览器都允许静音自动播放），
+//   用户首次任意交互（点击/触摸/按键）时，在事件回调里同步取消静音——
+//   注意必须在手势同步上下文中调用，不能用 setTimeout，否则手势上下文丢失会被再次拦截。
 
 export function MusicPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [muted, setMuted] = useState(false);
-  const [triedAutoplay, setTriedAutoplay] = useState(false);
+  // 初始静音——为了让「静音自动播放」通过浏览器策略
+  const [muted, setMuted] = useState(true);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  // 是否已通过首次交互解除静音
+  const unmutedRef = useRef(false);
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith("/admin") ?? false;
 
-  // 播放（处理 promise rejection —— 浏览器策略拦截时不报错）
-  const play = useCallback(() => {
+  // 挂载即静音播放（静音自动播放不会被拦截）
+  useEffect(() => {
+    if (isAdmin) return;
     const audio = audioRef.current;
     if (!audio) return;
+    audio.muted = true;
     const p = audio.play();
     if (p && typeof p.then === "function") {
       p.then(() => setIsPlaying(true)).catch(() => {
-        // 被浏览器策略拦截（用户尚未交互），静默处理
+        // 极少数浏览器连静音播放也拦，留给首次交互兜底
         setIsPlaying(false);
       });
     } else {
       setIsPlaying(true);
     }
-  }, []);
+  }, [isAdmin]);
 
-  const pause = useCallback(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    audio.pause();
-    setIsPlaying(false);
-  }, []);
-
-  // 首次用户交互后自动播放（核心：解决"不自动播放"问题）
+  // 首次用户交互：同步取消静音（必须在手势回调内同步执行）
   useEffect(() => {
     if (isAdmin) return;
 
-    let triggered = false;
     const handleFirstInteraction = () => {
-      if (triggered) return;
-      triggered = true;
-      setTriedAutoplay(true);
-      // 稍延迟，确保 audio 元素已就绪
-      setTimeout(() => play(), 200);
+      if (unmutedRef.current) return;
+      unmutedRef.current = true;
+      const audio = audioRef.current;
+      if (!audio) return;
+      // 同步取消静音 + 确保在播（不能放进 setTimeout）
+      audio.muted = false;
+      setMuted(false);
+      const p = audio.play();
+      if (p && typeof p.then === "function") {
+        p.then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
+      } else {
+        setIsPlaying(true);
+      }
       cleanup();
     };
 
@@ -60,26 +65,36 @@ export function MusicPlayer() {
       document.removeEventListener("touchstart", handleFirstInteraction);
     };
 
-    // pointerdown 覆盖鼠标和触摸，最全面
-    document.addEventListener("pointerdown", handleFirstInteraction, {
-      once: false,
-    });
-    document.addEventListener("keydown", handleFirstInteraction, {
-      once: false,
-    });
-    // 兜底：某些旧浏览器不支持 pointerdown
+    document.addEventListener("pointerdown", handleFirstInteraction);
+    document.addEventListener("keydown", handleFirstInteraction);
     document.addEventListener("touchstart", handleFirstInteraction, {
-      once: false,
       passive: true,
     });
 
     return cleanup;
-  }, [isAdmin, play]);
+  }, [isAdmin]);
 
   // 切换播放/暂停
   const togglePlay = () => {
-    if (isPlaying) pause();
-    else play();
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (isPlaying) {
+      audio.pause();
+      setIsPlaying(false);
+    } else {
+      // 用户手动点播放——此时已有手势，可同步取消静音
+      if (muted) {
+        audio.muted = false;
+        unmutedRef.current = true;
+        setMuted(false);
+      }
+      const p = audio.play();
+      if (p && typeof p.then === "function") {
+        p.then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
+      } else {
+        setIsPlaying(true);
+      }
+    }
   };
 
   // 静音/取消静音
@@ -88,6 +103,7 @@ export function MusicPlayer() {
     if (!audio) return;
     const next = !muted;
     audio.muted = next;
+    if (!next) unmutedRef.current = true;
     setMuted(next);
   };
 
@@ -100,8 +116,7 @@ export function MusicPlayer() {
         src="/music/zen-ambient.mp3"
         loop
         preload="auto"
-        // 元素级静音初始态
-        muted={muted}
+        muted
       />
       <div className="fixed right-4 top-20 z-50 flex items-center gap-2 rounded-full border border-gold/20 bg-bg-primary/90 px-3 py-2 backdrop-blur-md md:top-24">
         <button
