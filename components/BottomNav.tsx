@@ -22,7 +22,7 @@ const bottomNavItems = [
 
 const moreNavItems = [
   { href: "/bazi", label: "八字起名", icon: "👶" },
-  { href: "/profile", label: "个人中心", icon: "👤" },
+  { href: "/profile", label: "我的记录", icon: "👤" },
 ];
 
 export function BottomNav() {

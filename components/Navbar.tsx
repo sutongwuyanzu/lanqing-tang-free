@@ -50,7 +50,7 @@ export function Navbar() {
             }`}
           >
             <UserCircle className="h-4 w-4" />
-            个人中心
+            我的记录
           </Link>
         </div>
       </div>
