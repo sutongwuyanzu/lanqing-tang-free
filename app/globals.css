@@ -27,6 +27,16 @@
   --font-sans: system-ui, -apple-system, sans-serif;
 }
 
+/* 紫微排盘组件 CSS 变量映射（原仓库用 --t-* 前缀，映射到竹纸主题） */
+:root {
+  --t-gold: var(--color-gold);
+  --t-bg: var(--color-bg-card);
+  --t-faint: var(--color-text-muted);
+  --t-border: var(--color-border);
+  --t-surface: var(--color-bg-input);
+  --t-text2: var(--color-text-secondary);
+}
+
 /* 全局基础样式 */
 body {
   background-color: var(--color-bg-primary);

@@ -9,6 +9,7 @@ const navItems = [
   { href: "/dream", label: "解梦" },
   { href: "/bazi", label: "起名" },
   { href: "/pray", label: "祈福" },
+  { href: "/ziwei", label: "紫微" },
 ];
 
 export function Navbar() {

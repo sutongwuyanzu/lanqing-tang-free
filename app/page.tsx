@@ -43,6 +43,14 @@ const features = [
     tag: "八字精批",
     color: "from-emerald-900/40 to-teal-900/30",
   },
+  {
+    href: "/ziwei",
+    icon: Sparkles,
+    title: "紫微排盘",
+    desc: "紫微斗数，命盘解读",
+    tag: "命理",
+    color: "from-purple-900/40 to-violet-900/30",
+  },
 ];
 
 export default function Home() {

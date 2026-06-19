@@ -22,6 +22,7 @@ const bottomNavItems = [
 
 const moreNavItems = [
   { href: "/bazi", label: "八字起名", icon: "👶" },
+  { href: "/ziwei", label: "紫微排盘", icon: "🔮" },
   { href: "/profile", label: "我的记录", icon: "👤" },
 ];
 
