@@ -9,9 +9,16 @@ import {
   ArrowDown,
 } from "lucide-react";
 import { DonateSection } from "@/components/DonateSection";
-import { TodayHuangliCard } from "@/components/TodayHuangliCard";
 
 const features = [
+  {
+    href: "/huangli",
+    icon: CalendarDays,
+    title: "今日黄历",
+    desc: "干支宜忌，吉时方位",
+    tag: "每日运势",
+    color: "from-amber-900/40 to-yellow-900/30",
+  },
   {
     href: "/pray",
     icon: Flame,
@@ -101,45 +108,37 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 今日黄历 */}
-      <section className="mx-auto max-w-4xl px-4 pb-8 md:px-6">
-        <div className="divider-ornament mb-6 text-sm">
-          ✦ 今日黄历 ✦
-        </div>
-        <TodayHuangliCard />
-      </section>
-
       {/* 功能入口 */}
       <section className="mx-auto max-w-6xl px-4 pb-12 md:px-6">
         <div className="divider-ornament mb-8 text-sm">
-          ✦ 四大善门 ✦
+          ✦ 六大善门 ✦
         </div>
 
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+        <div className="grid grid-cols-3 gap-3 md:gap-5">
           {features.map((feature) => {
             const Icon = feature.icon;
             return (
               <Link key={feature.href} href={feature.href} className="group">
                 <div
-                  className={`card-classic relative overflow-hidden p-5 md:p-6 ${feature.color}`}
+                  className={`card-classic relative overflow-hidden p-4 md:p-5 ${feature.color}`}
                 >
                   {/* 标签 */}
                   {feature.tag && (
-                    <span className="absolute right-3 top-3 rounded-full bg-gold/20 px-2 py-0.5 text-[10px] font-medium text-gold">
+                    <span className="absolute right-2 top-2 rounded-full bg-gold/20 px-1.5 py-0.5 text-[9px] font-medium text-gold md:text-[10px]">
                       {feature.tag}
                     </span>
                   )}
 
                   {/* 图标 */}
-                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-gold/10">
+                  <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl bg-gold/10 md:h-10 md:w-10">
                     <Icon className="h-5 w-5 text-gold" />
                   </div>
 
                   {/* 标题和描述 */}
-                  <h3 className="mb-1 text-base font-bold text-text-primary md:text-lg">
+                  <h3 className="mb-0.5 text-sm font-bold text-text-primary md:text-base">
                     {feature.title}
                   </h3>
-                  <p className="text-xs text-text-secondary md:text-sm">
+                  <p className="text-[11px] text-text-secondary md:text-xs">
                     {feature.desc}
                   </p>
                 </div>
