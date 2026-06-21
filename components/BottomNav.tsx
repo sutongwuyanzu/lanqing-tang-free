@@ -15,12 +15,13 @@ import {
 
 const bottomNavItems = [
   { href: "/", label: "首页", icon: Home },
-  { href: "/pray", label: "祈福", icon: Flame },
-  { href: "/dream", label: "解梦", icon: CalendarDays },
+  { href: "/huangli", label: "黄历", icon: CalendarDays },
   { href: "/lingqian", label: "灵签", icon: ScrollText },
+  { href: "/pray", label: "祈福", icon: Flame },
 ];
 
 const moreNavItems = [
+  { href: "/dream", label: "周公解梦", icon: "🌙" },
   { href: "/bazi", label: "八字起名", icon: "👶" },
   { href: "/ziwei", label: "紫微排盘", icon: "🔮" },
   { href: "/profile", label: "我的记录", icon: "👤" },

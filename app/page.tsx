@@ -9,6 +9,7 @@ import {
   ArrowDown,
 } from "lucide-react";
 import { DonateSection } from "@/components/DonateSection";
+import { TodayHuangliCard } from "@/components/TodayHuangliCard";
 
 const features = [
   {
@@ -98,6 +99,14 @@ export default function Home() {
           <span className="text-xs">向下滚动</span>
           <ArrowDown className="h-4 w-4" />
         </div>
+      </section>
+
+      {/* 今日黄历 */}
+      <section className="mx-auto max-w-4xl px-4 pb-8 md:px-6">
+        <div className="divider-ornament mb-6 text-sm">
+          ✦ 今日黄历 ✦
+        </div>
+        <TodayHuangliCard />
       </section>
 
       {/* 功能入口 */}

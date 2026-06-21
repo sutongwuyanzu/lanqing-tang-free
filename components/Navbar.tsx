@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { UserCircle } from "lucide-react";
 
 const navItems = [
+  { href: "/huangli", label: "黄历" },
   { href: "/lingqian", label: "灵签" },
   { href: "/dream", label: "解梦" },
   { href: "/bazi", label: "起名" },
